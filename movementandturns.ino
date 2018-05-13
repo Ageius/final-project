@@ -1,4 +1,5 @@
-//a damn lot of libraries
+// YL: the code below is modified from https://github.com/pvcraven/zumo_32u4_examples/blob/master/GyroSensorExample/GyroSensorExample.ino
+// YL: a damn lot of libraries
 #include <Wire.h>
 #include <Pushbutton.h>
 #include <Zumo32U4ProximitySensors.h>
@@ -18,8 +19,6 @@
 #include <L3G.h>
 #include <Zumo32U4Buzzer.h>
 #include <QTRSensors.h>
-
-// YL: the code below is modified from https://github.com/pvcraven/zumo_32u4_examples/blob/master/GyroSensorExample/GyroSensorExample.ino
 
 L3G gyro;
 Zumo32U4LCD lcd;
