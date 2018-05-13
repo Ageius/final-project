@@ -1,6 +1,7 @@
 // YL: the code below is modified from https://github.com/pvcraven/zumo_32u4_examples/blob/master/GyroSensorExample/GyroSensorExample.ino
 // YL: a damn lot of libraries
 #include <Wire.h>
+//YL: we for sure need this one
 #include <Pushbutton.h>
 #include <Zumo32U4ProximitySensors.h>
 #include <Zumo32U4Encoders.h>
@@ -8,10 +9,12 @@
 #include <PololuBuzzer.h>
 #include <FastGPIO.h>
 #include <Zumo32U4Motors.h>
+//YL: we for sure need this one
 #include <LSM303.h>
 #include <Zumo32U4.h>
 #include <Zumo32U4LCD.h>
 #include <TurnSensor.h>
+//YL: we for sure need this one
 #include <Zumo32U4LineSensors.h>
 #include <PololuHD44780.h>
 #include <USBPause.h>
@@ -19,6 +22,8 @@
 #include <L3G.h>
 #include <Zumo32U4Buzzer.h>
 #include <QTRSensors.h>
+#include <AccelStepper.h>
+//YL: we for sure need this one
 
 L3G gyro;
 Zumo32U4LCD lcd;
