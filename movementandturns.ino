@@ -23,7 +23,7 @@
 
 // YL: the code below is modified from https://github.com/pvcraven/zumo_32u4_examples/blob/master/GyroSensorExample/GyroSensorExample.ino
 // and https://github.com/pvcraven/zumo_32u4_examples/blob/master/TurnExample/TurnExample.ino
-// and https://github.com/pvcraven/zumo_32u4_examples/blob/master/MotorEncoders/MotorEncoders.ino
+// and https://github.com/pololu/zumo-32u4-arduino-library/blob/master/examples/Encoders/Encoders.ino
 
 L3G gyro;
 Zumo32U4LCD lcd;
