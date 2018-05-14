@@ -1,5 +1,6 @@
 // YL: the code below is modified from https://github.com/pvcraven/zumo_32u4_examples/blob/master/GyroSensorExample/GyroSensorExample.ino
-// YL: a damn lot of libraries
+// YL: also based on turn test example in Arduino app, by X. Yang
+// YL: a damn lot of libraries of unknown purposes
 #include <Wire.h>
 //YL: we for sure need this one
 #include <Pushbutton.h>
@@ -23,7 +24,9 @@
 #include <Zumo32U4Buzzer.h>
 #include <QTRSensors.h>
 #include <AccelStepper.h>
-//YL: we for sure need this one
+//YL: we for sure need this one???
+#include <SPI.h>
+//YL: yeah we need this one
 
 L3G gyro;
 Zumo32U4LCD lcd;
@@ -38,6 +41,8 @@ int32_t getAngle() {
 
 // --- Setup Method
 void setup() {
+  buttonA.waitForButton();
+  delay(1000);
   turnSensorSetup();
   delay(500);
   turnSensorReset();
@@ -45,12 +50,9 @@ void setup() {
 }
 
 void loop() {
-  
   // Read the sensors
   turnSensorUpdate();
   int32_t angle = getAngle();
+  motors.setSpeeds(speed);
+  
 }
-
-
-
-
