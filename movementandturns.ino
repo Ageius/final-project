@@ -1,8 +1,5 @@
-// YL: the code below is modified from https://github.com/pvcraven/zumo_32u4_examples/blob/master/GyroSensorExample/GyroSensorExample.ino
-// YL: also based on turn test example in Arduino app, by X. Yang
-// YL: a damn lot of libraries of unknown purposes
+//a damn lot of libraries
 #include <Wire.h>
-//YL: we for sure need this one
 #include <Pushbutton.h>
 #include <Zumo32U4ProximitySensors.h>
 #include <Zumo32U4Encoders.h>
@@ -10,12 +7,10 @@
 #include <PololuBuzzer.h>
 #include <FastGPIO.h>
 #include <Zumo32U4Motors.h>
-//YL: we for sure need this one
 #include <LSM303.h>
 #include <Zumo32U4.h>
 #include <Zumo32U4LCD.h>
 #include <TurnSensor.h>
-//YL: we for sure need this one
 #include <Zumo32U4LineSensors.h>
 #include <PololuHD44780.h>
 #include <USBPause.h>
@@ -24,20 +19,20 @@
 #include <Zumo32U4Buzzer.h>
 #include <QTRSensors.h>
 #include <AccelStepper.h>
-//YL: we for sure need this one???
 #include <SPI.h>
-//YL: yeah we need this one
+
+// YL: the code below is modified from https://github.com/pvcraven/zumo_32u4_examples/blob/master/GyroSensorExample/GyroSensorExample.ino
+// and https://github.com/pvcraven/zumo_32u4_examples/blob/master/TurnExample/TurnExample.ino
+// and https://github.com/pvcraven/zumo_32u4_examples/blob/master/MotorEncoders/MotorEncoders.ino
 
 L3G gyro;
 Zumo32U4LCD lcd;
+Zumo32U4Motors motors;
+Zumo32U4ButtonA buttonA;
+Zumo32U4Encoders encoders;
 
-// "--- Helper functions"
-int32_t getAngle() {
-  // "turnAngle is a variable defined in TurnSensor.cpp"
-  // "This fancy math converts the number into degrees turned since the
-  // last sensor reset."
-  return (((int32_t)turnAngle >> 16) * 360) >> 16;
-}
+int turnSpeed = 150;
+int motorSpeed = 250;
 
 // --- Setup Method
 void setup() {
@@ -46,13 +41,98 @@ void setup() {
   turnSensorSetup();
   delay(500);
   turnSensorReset();
-  lcd.clear();
+}
+
+void turnLeft(int degrees) {
+  turnSensorReset();
+  motors.setSpeeds(-turnSpeed, turnSpeed);
+  int angle = 0;
+  do {
+    delay(1);
+    turnSensorUpdate();
+    angle = (((int32_t)turnAngle >> 16) * 360) >> 16;
+    lcd.gotoXY(0, 0);
+    lcd.print(angle);
+    lcd.print(" ");
+  } while (angle < degrees);
+  motors.setSpeeds(0, 0);
+}
+
+// Turn right
+void turnRight(int degrees) {
+  turnSensorReset();
+  motors.setSpeeds(turnSpeed, -turnSpeed);
+  int angle = 0;
+  do {
+    delay(1);
+    turnSensorUpdate();
+    angle = (((int32_t)turnAngle >> 16) * 360) >> 16;
+    lcd.gotoXY(0, 0);
+    lcd.print(angle);
+    lcd.print(" ");
+  } while (angle > -degrees);
+  motors.setSpeeds(0, 0);
+}
+
+void forward(long count) {
+  encoders.getCountsAndResetLeft();
+  encoders.getCountsAndResetRight();
+  long countsLeft = 0;
+  long countsRight = 0;
+  motors.setSpeeds(motorSpeed, motorSpeed);
+  while(countsLeft < count) {
+    countsLeft += encoders.getCountsAndResetLeft();
+    countsRight += encoders.getCountsAndResetRight();
+    lcd.gotoXY(0, 1);
+    lcd.print(countsLeft);
+    lcd.print(" ");
+    delay(2);
+  };
+  motors.setSpeeds(0, 0);
+}
+
+void reverse(long count) {
+  encoders.getCountsAndResetLeft();
+  encoders.getCountsAndResetRight();
+  long countsLeft = 0;
+  long countsRight = 0;
+  motors.setSpeeds(-motorSpeed, -motorSpeed);
+  while(countsLeft < count) {
+    countsLeft -= encoders.getCountsAndResetLeft();
+    countsRight -= encoders.getCountsAndResetRight();
+    lcd.gotoXY(0, 1);
+    lcd.print(countsLeft);
+    lcd.print(" ");
+    delay(2);
+  };
+  motors.setSpeeds(0, 0);
 }
 
 void loop() {
   // Read the sensors
   turnSensorUpdate();
-  int32_t angle = getAngle();
-  motors.setSpeeds(speed);
-  
+  int angle = (((int32_t)turnAngle >> 16) * 360) >> 16;
+  lcd.gotoXY(0, 0);
+  lcd.print(angle);
+  lcd.print(" ");
+  //if we press A, then it starts:
+  bool buttonPress = buttonA.getSingleDebouncedPress();
+  if (buttonPress) {
+     delay(5000);
+     // because 0.0927in
+     forward(927);
+     delay(1000);
+     turnLeft(96);
+     delay(1000);
+     forward(580);
+     delay(1000);
+     turnLeft(45);
+     delay(1000);
+     forward(710);
+     turnRight(21);
+     delay(1000);
+     forward(1446);
+     delay(1000);
+ //should be pupper head and front limbs    
+}
 }
