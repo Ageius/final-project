@@ -131,8 +131,26 @@ void loop() {
      forward(710);
      turnRight(21);
      delay(1000);
-     forward(1446);
+     forward(1474);
+      //should be pupper head and front limbs  
      delay(1000);
- //should be pupper head and front limbs    
+     turnRight(180);
+     forward(1474);
+     delay(1000);
+     //go back
+     turnLeft(76);
+     delay(1000);
+     forward(2899);
+     delay(1000);
+     turnRight(76);
+     delay(1000);
+     forward(1229);
+     delay(1000);
+     turnRight(180);
+     delay(1000);
+     forward(1229);
+     delay(1000);
+     turnRight(93);
+     delay(1000);     
 }
 }
