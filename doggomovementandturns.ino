@@ -31,7 +31,7 @@ Zumo32U4Motors motors;
 Zumo32U4ButtonA buttonA;
 Zumo32U4Encoders encoders;
 
-int turnSpeed = 150;
+int turnSpeed = 150; //I wonder what it'd be like if I turn up the turn speed. Would it have a smaller turn radius?
 int motorSpeed = 250;
 
 // --- Setup Method
