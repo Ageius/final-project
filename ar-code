@@ -1,0 +1,27 @@
+<!--AR.js by @jerome_etienne - github: https://github.com/jeromeetienne/ar.js - info: https://medium.com/arjs/augmented-reality-in-10-lines-of-html-4e193ea9fdbf-->
+<!DOCTYPE HTML>
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" sizes="120x120" href="ICON_iphone_retina.png" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=no">
+
+<script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.5/aframe/build/aframe-ar.js"></script>
+<script>THREx.ArToolkitContext.baseURL = 'https://rawgit.com/jeromeetienne/ar.js/master/three.js/'</script>
+<body style='margin : 0px; overflow: hidden;'>
+	<a-scene embedded arjs='sourceType: webcam;'>
+        <a-marker preset='hiro'>
+        	<a-torus-knot position="0 0 0" radius='0.26' radius-tubular='0.05'>
+				     <a-animation attribute="rotation" to="360 360 360" dur="3000" easing='linear' repeat="indefinite"></a-animation>
+			    </a-torus-knot>
+		    </a-marker>
+        <a-marker preset='kanji'>
+        	<a-torus position="0 .5 0" radius='0.26' radius-tubular='0.05' >
+				    <a-animation attribute="rotation" to="360 0 0" dur="3000" easing='linear' repeat="indefinite"></a-animation>
+				    <a-animation attribute="scale" dur="1000" from="1 1 1" to="1.5 1.5 1.5" direction="alternate-reverse" easing="ease-in-out-circ" repeat="indefinite"></a-animation>
+			    </a-torus>
+        </a-marker> 	
+        <a-entity camera></a-entity>
+    </a-scene> 
+    <style>
